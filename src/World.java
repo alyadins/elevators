@@ -78,41 +78,8 @@ public class World {
         }
 
         mBuilding = new Building(this, numberOfFloor);
-        List<Elevator> elevators = createElevators(mBuilding);
-        mBuilding.setElevators(elevators);
         Util.print("Здание создано");
     }
 
-    private List<Elevator> createElevators(Building building) {
 
-        List<Elevator> elevators;
-        Util.print("Введите количество лифтов");
-        int numberOfElevators = Util.scanInt();
-        if (numberOfElevators < 1) {
-            Util.print("Количество лифтов задано неверно");
-            System.exit(1);
-        }
-
-        Util.print("Ведите время посадки/высадки пассажиров");
-        int landingTime = Util.scanInt();
-        if (landingTime < 1) {
-            Util.print("Время посадки не может быть меньше 1");
-            System.exit(1);
-        }
-
-        elevators = new ArrayList<Elevator>(numberOfElevators);
-        Util.print("Введите максимальное число людей, которое вмещает лифт");
-        int maxPeople = Util.scanInt();
-        if (maxPeople < 1) {
-            Util.print("Максимальное количество людей не может быть меньше 1");
-            System.exit(1);
-        }
-
-        for (int i = 0; i < numberOfElevators; i++) {
-            Elevator elevator = new Elevator(building, maxPeople, landingTime);
-            elevators.add(elevator);
-        }
-
-        return elevators;
-    }
 }

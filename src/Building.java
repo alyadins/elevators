@@ -15,6 +15,7 @@ public class Building {
     public Building(World world, int numberOfFloors) {
         this.mWorld = world;
         this.mNumberOfFloors = numberOfFloors;
+        mElevators = createElevators();
     }
 
     public void setElevators(List<Elevator> elevators) {
@@ -27,27 +28,45 @@ public class Building {
 
     public void update(int time) {
 
-        processRequests();
-
-        updateElevators(time);
     }
 
     public World getWorld() {
         return mWorld;
     }
 
-    private void processRequests() {
-            Elevator elevator = getFreeElevator();
-            if (elevator == null) {
-                return;
-            }
+    private List<Elevator> createElevators() {
+
+        List<Elevator> elevators;
+        Util.print("Введите количество лифтов");
+        int numberOfElevators = Util.scanInt();
+        if (numberOfElevators < 1) {
+            Util.print("Количество лифтов задано неверно");
+            System.exit(1);
+        }
+
+        Util.print("Ведите время посадки/высадки пассажиров");
+        int landingTime = Util.scanInt();
+        if (landingTime < 1) {
+            Util.print("Время посадки не может быть меньше 1");
+            System.exit(1);
+        }
+
+        elevators = new ArrayList<Elevator>(numberOfElevators);
+        Util.print("Введите максимальное число людей, которое вмещает лифт");
+        int maxPeople = Util.scanInt();
+        if (maxPeople < 1) {
+            Util.print("Максимальное количество людей не может быть меньше 1");
+            System.exit(1);
+        }
+
+        for (int i = 0; i < numberOfElevators; i++) {
+            Elevator elevator = new Elevator(this, maxPeople, landingTime);
+            elevators.add(elevator);
+        }
+
+        return elevators;
     }
 
-    private void updateElevators(int time) {
-        for (Elevator elevator : mElevators) {
-            elevator.update(time);
-        }
-    }
 
     private Elevator getFreeElevator() {
 
@@ -59,6 +78,7 @@ public class Building {
 
         return null;
     }
+
 
     private class HumanComparator implements Comparator<Human> {
 
