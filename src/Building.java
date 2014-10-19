@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,6 +30,26 @@ public class Building {
     }
 
     public void update(int time) {
+        updateRequests(time);
+
+        processRequests();
+    }
+
+
+    private void updateRequests(int time) {
+        for (Human h : mHumans) {
+            if (h.isNeedElevator()) {
+                if (!h.isRequestAccepted()) {
+                    Request request = new Request(h.getCurrentFloor(), h.getNecessaryFloor(), time);
+                    h.setRequest(request);
+                    mRequestsList.add(request);
+                }
+            }
+        }
+        Collections.sort(mRequestsList);
+    }
+
+    private void processRequests() {
 
     }
 }

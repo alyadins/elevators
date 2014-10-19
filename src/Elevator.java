@@ -7,12 +7,14 @@ public class Elevator {
     private int mMaxPeople;
 
     //state params
-    private int mCurrentFloor;
+    private int mCurrentFloor = 0;
     private int mNextFloor;
     private int mCurrentNumberOfPeople;
+    private int mLandingTime;
 
 
-    public Elevator(int maxPeople) {
+    public Elevator(int maxPeople, int landingTime) {
         this.mMaxPeople = maxPeople;
+        this.mLandingTime = landingTime;
     }
 }
