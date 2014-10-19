@@ -10,11 +10,10 @@ public class Building {
 
     private int mNumberOfFloors;
     private List<Elevator> mElevators;
+    private World mWorld;
 
-    private List<Request> mRequestsList = new ArrayList<Request>();
-    private List<Human> mHumans;
-
-    public Building(int numberOfFloors) {
+    public Building(World world, int numberOfFloors) {
+        this.mWorld = world;
         this.mNumberOfFloors = numberOfFloors;
     }
 
@@ -26,56 +25,22 @@ public class Building {
         return mNumberOfFloors;
     }
 
-    public void setHumans(List<Human> humans) {
-        this.mHumans = humans;
-        Collections.sort(mHumans, new HumanComparator());
-    }
-
     public void update(int time) {
-        updateRequests(time);
 
         processRequests();
 
         updateElevators(time);
     }
 
-
-
-    private void updateRequests(int time) {
-        int currentHuman = 0;
-        while (currentHuman < mHumans.size()) {
-            int sameRequests = 1;
-            int fromFloor = mHumans.get(currentHuman).getCurrentFloor();
-            int toFloor = mHumans.get(currentHuman).getNecessaryFloor();
-            boolean isSame = false;
-            int sameCounter = 0;
-            do {
-                Human h = mHumans.get(currentHuman + sameCounter + 1);
-                if (h.getCurrentFloor() == fromFloor && h.getNecessaryFloor() == toFloor) {
-                    isSame = true;
-                    sameCounter++;
-                } else {
-                    isSame = false;
-                }
-            } while (isSame);
-
-            List<Human> sameHumans = new ArrayList<Human>();
-           //Request request = new Request(fromFloor, toFloor, time)
-        }
+    public World getWorld() {
+        return mWorld;
     }
 
     private void processRequests() {
-
-        for (Request request : mRequestsList) {
             Elevator elevator = getFreeElevator();
             if (elevator == null) {
                 return;
             }
-
-            elevator.processRequest(request);
-
-
-        }
     }
 
     private void updateElevators(int time) {

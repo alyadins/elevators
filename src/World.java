@@ -22,6 +22,10 @@ public class World {
         start();
     }
 
+    public List<Human> getHumans() {
+        return mHumans;
+    }
+
     /*
         Main loop
      */
@@ -33,7 +37,6 @@ public class World {
             }
 
             clearHumans();
-            mBuilding.setHumans(mHumans);
             mBuilding.update(mCurrentTime);
         }
     }
@@ -74,13 +77,13 @@ public class World {
             System.exit(1);
         }
 
-        mBuilding = new Building(numberOfFloor);
-        List<Elevator> elevators = createElevators();
+        mBuilding = new Building(this, numberOfFloor);
+        List<Elevator> elevators = createElevators(mBuilding);
         mBuilding.setElevators(elevators);
         Util.print("Здание создано");
     }
 
-    private static List<Elevator> createElevators() {
+    private List<Elevator> createElevators(Building building) {
 
         List<Elevator> elevators;
         Util.print("Введите количество лифтов");
@@ -106,7 +109,7 @@ public class World {
         }
 
         for (int i = 0; i < numberOfElevators; i++) {
-            Elevator elevator = new Elevator(maxPeople, landingTime);
+            Elevator elevator = new Elevator(building, maxPeople, landingTime);
             elevators.add(elevator);
         }
 

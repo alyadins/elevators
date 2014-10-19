@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Created by lexer on 16.10.14.
  */
@@ -18,14 +20,14 @@ public class Elevator {
     private int mCurrentNumberOfPeople;
     private int mEmbarkationTime;
     private int mCurrentEmbarkationTime = 0;
-
-    private Request mRequest;
+    private Building building;
 
     private boolean mIsDisembarkation = false;
 
     private State mState = State.WAIT;
 
-    public Elevator(int maxPeople, int embarkationTime) {
+    public Elevator(Building building, int maxPeople, int embarkationTime) {
+        this.building = building;
         this.mMaxPeople = maxPeople;
         this.mEmbarkationTime = embarkationTime;
     }
@@ -34,8 +36,7 @@ public class Elevator {
         return mState.equals(State.WAIT);
     }
 
-    public void processRequest(Request request) {
-        mRequest = request;
+    public void process(List<Human> humans) {
         mState = State.MOVING_TO_HUMAN;
     }
 
@@ -66,13 +67,14 @@ public class Elevator {
       False if we moving
    */
     private boolean move() {
-        if (mCurrentFloor > mRequest.getFromFloor()) {
-            moveUp();
-            return false;
-        } else if (mCurrentFloor < mRequest.getFromFloor()) {
-            moveDown();
-            return false;
-        } return true;
+//        if (mCurrentFloor > mRequest.getFromFloor()) {
+//            moveUp();
+//            return false;
+//        } else if (mCurrentFloor < mRequest.getFromFloor()) {
+//            moveDown();
+//            return false;
+//        } return true;
+        return true;
     }
 
     private void moveUp() {
