@@ -7,6 +7,7 @@ public class Human {
     private int mCurrentFloor = 0;
     private int mNecessaryFloor;
     private Request mRequest;
+    private boolean mIsRequestAccepted;
 
     public Human(int currentFloor, int necessaryFloor, boolean isNeedElevator, int callElevatorTime) {
         this.mCurrentFloor = currentFloor;
@@ -48,7 +49,11 @@ public class Human {
     }
 
     public boolean isRequestAccepted() {
-        return mRequest != null;
+        return mIsRequestAccepted;
+    }
+
+    public void setRequestAccepted(boolean isAccepted) {
+        mIsRequestAccepted = isAccepted;
     }
 
     public void clearRequest() {

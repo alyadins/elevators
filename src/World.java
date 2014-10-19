@@ -44,7 +44,8 @@ public class World {
         int numberOfNewPeople = mRandom.nextInt(PORTION_OF_PEOPLE);
         for (int i = 0; i < numberOfNewPeople; i++) {
             int wantedFloor = mRandom.nextInt(mBuilding.getNumberOfFloors() - 1) + 1;
-            Human human = new Human(mRandom.nextInt(), wantedFloor, true, time);
+            int fromFloor = mRandom.nextInt(mBuilding.getNumberOfFloors() - 1) + 1;
+            Human human = new Human(fromFloor, wantedFloor, true, time);
             mHumans.add(human);
         }
     }

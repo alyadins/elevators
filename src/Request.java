@@ -1,29 +1,21 @@
+import java.util.List;
+
 /**
  * Created by lexer on 16.10.14.
  */
 public class Request implements Comparable{
 
-    public enum Direction {
-        UP, DOWN
-    }
 
     private int mFromFloor;
     private int mToFloor;
     private int mCreationTime;
-    private Direction mDirection;
+    private List<Human> mHumans;
 
-    public Request(int fromFloor, int toFloor, int creationTime) {
+    public Request(int fromFloor, int toFloor, int creationTime, List<Human> humans) {
         this.mFromFloor = fromFloor;
         this.mToFloor = toFloor;
         this.mCreationTime = creationTime;
-
-        if (mFromFloor > mToFloor) {
-            mDirection = Direction.DOWN;
-        } else if (mFromFloor < mToFloor) {
-            mDirection = Direction.UP;
-        } else {
-            throw new IllegalArgumentException("Этаж куда ехать. равен этажу откуда ехать");
-        }
+        this.mHumans = humans;
     }
 
     public void setFromFloor(int fromFloor) {
@@ -42,13 +34,9 @@ public class Request implements Comparable{
         return mToFloor;
     }
 
-    public Direction getDirection() {
-        return mDirection;
-    }
-
     @Override
     public int compareTo(Object o) {
         Request cRequest = (Request) o;
-        return mFromFloor - cRequest.mFromFloor;
+        return getFromFloor() - cRequest.getFromFloor();
     }
 }
